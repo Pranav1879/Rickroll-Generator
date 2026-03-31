@@ -28,7 +28,7 @@ const incValue = {
     },
 };
 
-let PORT: number | string;
+let PORT: number;
 let mongoClient: mongoDB.MongoClient;
 let collection: mongoDB.Collection;
 export const info = {};
