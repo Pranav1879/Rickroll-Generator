@@ -203,10 +203,6 @@ const handleRR = async (req: Request, res: Response) => {
     } else {
         text = "Get rickrolled! haha";
     }
-        text = `${author} rickrolled you! haha`;
-    } else {
-        text = "Get rickrolled! haha";
-    }
 
     res.render("_rickroll", { title, description, ImgUrl, text });
 };
