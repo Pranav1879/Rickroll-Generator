@@ -213,7 +213,7 @@ export const updateCache = (url: string, params: any) => {
 
 const serve = async () => {
     await setup().then(() =>
-        app.listen(PORT, () => {
+        app.listen(PORT, "0.0.0.0", () => {
             console.log(`Listening on port ${PORT}`);
         })
     );
