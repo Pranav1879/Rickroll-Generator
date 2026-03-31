@@ -35,7 +35,7 @@ export const info = {};
 
 const setup = async () => {
     const URL = process.env.mongourl;
-    PORT = parseInt(process.env.PORT || process.env.port || "3000");
+    PORT = parseInt(process.env.PORT || process.env.port || "3000", 10);
 
     if (!URL) throw new Error("Env file not configured properly. 'mongourl' not found.");
 
@@ -197,7 +197,6 @@ const handleRR = async (req: Request, res: Response) => {
 		await collection.updateOne({ link: url }, incValue);
 	}
 
-    const author = params.author || "";
     if (author && typeof author === "string" && author.length > 0) {
         text = `${author} rickrolled you! haha`;
     } else {
