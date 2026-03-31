@@ -1,222 +1,108 @@
 import * as mongoDB from "mongodb";
 import * as path from "path";
 import express, {
-    Request, Response, NextFunction,
-    text
+	json, Request, Response, NextFunction
 } from "express";
 import { RateLimiterMemory } from "rate-limiter-flexible";
 import { config } from "dotenv";
+import { isbot } from "isbot";
+import { api } from "./routers/api";
+
 config();
 
-//trust proxy level
-const PROXYLEVEL = 1;
-
 const app = express();
-app.set("trust proxy", PROXYLEVEL);
-app.use(express.static(path.join(__dirname, "../public")));
-app.set("views", path.join(__dirname, "../views"));
-app.set("view engine", "ejs");
-
-import { api } from "./routers/api";
-import { isbot } from "isbot";
-app.use("/api", api);
-
 const topLevelRickrollPaths = ["/posts/:url", "/news/:url", "/blogs/:url"];
-const incValue = {
-    $inc: {
-        value: 1
-    },
-};
+
+app.set("view engine", "ejs");
+app.set("views", path.join(process.cwd(), "public", "html"));
+app.use(express.static(path.join(process.cwd(), "public")));
+app.use("/api", api);
 
 let PORT: number;
 let mongoClient: mongoDB.MongoClient;
 let collection: mongoDB.Collection;
-export const info = {};
+export const info: any = {};
 
 const setup = async () => {
-    const URL = process.env.mongourl;
-    PORT = parseInt(process.env.PORT || process.env.port || "3000", 10);
+	const URL = process.env.mongourl;
+	PORT = parseInt(process.env.PORT || process.env.port || "3000", 10);
 
-    if (!URL) throw new Error("Env file not configured properly. 'mongourl' not found.");
+	if (!URL) throw new Error("Env file not configured properly. 'mongourl' not found.");
+	mongoClient = new mongoDB.MongoClient(URL);
+	await mongoClient.connect();
+	await mongoClient.db("main").command({ ping: 1 });
+	console.log("Connected successfully to db and fetched main collection.");
 
-    mongoClient = new mongoDB.MongoClient(URL);
-
-    await mongoClient.connect();
-    await mongoClient.db("main").command({ ping: 1 });
-
-    const database = mongoClient.db("main");
-    collection = database.collection("rickroll");
-
-    console.log("Connected successfully to db and fetched main collection.");
-
-    if (collection) {
-        return "Success";
-    } else {
-        return "Failed";
-    }
+	const database = mongoClient.db("main");
+	collection = database.collection("rickroll");
 };
-
-const globalRatelimiter = new RateLimiterMemory({
-    points: 100,
-    duration: 1,
-});
-
-const rateLimiterMiddleware = (req: Request, res: Response, next: NextFunction) => {
-    const ip = req.ip;
-
-    globalRatelimiter.consume(ip)
-        .then(() => {
-            next();
-        })
-        .catch((rateLimiterRes) => {
-            const retryAfter = rateLimiterRes.msBeforeNext / 1000;
-            const rateLimit = 3;
-            const rateLimitRemainingPoints = rateLimiterRes.remainingPoints;
-            const rateLimitReset = new Date(Date.now() + rateLimiterRes.msBeforeNext);
-            res.set({
-                "Retry-After": retryAfter,
-                "X-RateLimit-Limit": rateLimit,
-                "X-RateLimit-Remaining": rateLimitRemainingPoints,
-                "X-RateLimit-Reset": rateLimitReset
-            });
-            res.status(429).render("ratelimited", { retryAfter, rateLimit, rateLimitRemainingPoints, rateLimitReset });
-        });
-};
-app.use(rateLimiterMiddleware);
-
 
 app.get("/", async (req: Request, res: Response) => {
-    const result = await collection.findOne({ _id: new mongoDB.ObjectId("TotalRRCount") }); //cache count maybe?
-
-    if (!result) {
-        throw new Error("Could not find total rickroll count, is the database not configured? run `npm run setup-db`");
-    }
-
-    res.render("index", { rrCount: result.value });
+	const result = await collection.findOne({ _id: new mongoDB.ObjectId("TotalRRCount") });
+	const count = result ? result.value : 0;
+	res.render("index", { count });
 });
 
 app.get("/faq", (req: Request, res: Response) => {
-    res.render("faq");
+	res.render("faq");
 });
 
 app.get("/usage", (req: Request, res: Response) => {
-    res.render("usage");
+	res.render("usage");
 });
 
-app.get(topLevelRickrollPaths, (req: Request, res: Response) => {
-    handleRR(req, res);
-});
+app.get(topLevelRickrollPaths, async (req: Request, res: Response) => {
+	const url = req.params.url;
+	const result = await collection.findOne({ link: url });
 
-interface args {
-    url: string
-}
+	if (!result) {
+		return res.status(404).render("404");
+	}
 
-app.get("/data", async (req: Request<unknown, unknown, unknown, args>, res: Response) => {
-    const { query } = req;
-    if (!query.url) return res.redirect("/");
+	const { title, description, ImgUrl, author } = result;
+	const incValue = { $inc: { value: 1 } };
 
-    let result = await fetchFromDb(query.url);
-
-    if (!result) {
-        //data not in db, try cache
-        result = info[query.url];
-    }
-
-    const type = result ? result.type : "posts";
-
-    const protocol = req.secure ? "https" : "http";
-    const proxyHost = req.headers["x-forwarded-host"];
-    const host = proxyHost ? proxyHost : req.headers.host;
-    const link = `${protocol}://${host}/${type}/${query.url}`;
-
-    res.render("stats", { noClicks: result ? result.value : 0, title: encodeURI(query.url), link });
-});
-
-const create = (url: string, title: string, description: string, type: string, author: string, expiry: string | number, imgUrl: string) => {
-    const cDateTime = new Date();
-    expiry = Number(expiry);
-    if (expiry) {
-        const expireAt = cDateTime.setDate(cDateTime.getDate() + expiry);
-        collection.insertOne({ "link": url, value: 0, title, type, expiry, description, imgUrl, author, createDate: cDateTime, expireAt: expireAt });
-    }
-    else {
-        collection.insertOne({ "link": url, value: 0, title, type, expiry, description, imgUrl, author, createDate: cDateTime });
-    }
-
-    console.log(`created index for url ${url}!`);
-};
-
-const fetchFromDb = async (url: string) => {
-    let result: mongoDB.Document;
-    result = await collection.findOne({ "link": url });
-    //backwards compatibility, older version used "_id" field
-    if (!result) result = await collection.findOne({ _id: url });
-    return result;
-};
-
-const handleRR = async (req: Request, res: Response) => {
-    let url: string;
-    try {
-        url = decodeURI(req.params.url);
-    } catch (err) {
-        return console.log(err);
-    }
-
-    const result = await fetchFromDb(url);
-    if (!result && !info[url]) return res.render("invalid");
-
-    let description: string;
-    let type: string;
-    let expiry: string;
-    let ImgUrl: string;
-    let title: string;
-    let author: string;
-    let text: string;
-
-    if (result) {
-        title = result.title;
-        description = result.description;
-        author = result.author;
-        type = result.type;
-        ImgUrl = result.ImgUrl;
-    } else {
-        title = info[url].title;
-        description = info[url].description;
-        type = info[url].type;
-        author = info[url].author;
-        expiry = info[url].expiry;
-        ImgUrl = info[url].ImgUrl;
-        create(url, title, description, type, author, expiry, ImgUrl);
-
-        delete info[url];
-    }
-
-    //increment count if not a bot
 	if (!isbot(req.headers["user-agent"])) {
 		await collection.updateOne({ _id: new mongoDB.ObjectId("TotalRRCount") }, incValue);
 		await collection.updateOne({ link: url }, incValue);
 	}
 
-    if (author && typeof author === "string" && author.length > 0) {
-        text = `${author} rickrolled you! haha`;
-    } else {
-        text = "Get rickrolled! haha";
-    }
+	let text: string;
+	if (author && typeof author === "string" && author.length > 0) {
+		text = `${author} rickrolled you! haha`;
+	} else {
+		text = "Get rickrolled! haha";
+	}
 
-    res.render("_rickroll", { title, description, ImgUrl, text });
-};
+	res.render("_rickroll", { title, description, ImgUrl, text });
+});
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const updateCache = (url: string, params: any) => {
-    info[url] = { title: params.title, description: params.description, value: 0, type: params.type, expiry: params.expiry, ImgUrl: params.ImgUrl, createTime: params.cDateTime, author: params.author };
+	const cDateTime = new Date();
+	const expiry = params.expiry || 7;
+	const expireAt = new Date(cDateTime.getTime() + expiry * 24 * 60 * 60 * 1000);
+	
+	collection.insertOne({
+		link: url,
+		title: params.title,
+		description: params.description,
+		type: params.type,
+		author: params.author,
+		ImgUrl: params.ImgUrl,
+		value: 0,
+		expireAt: expireAt
+	});
 };
 
 const serve = async () => {
-    await setup().then(() =>
-        app.listen(PORT, "0.0.0.0", () => {
-            console.log(`Listening on port ${PORT}`);
-        })
-    );
+	await setup().then(() => {
+		app.listen(PORT, "0.0.0.0", () => {
+			console.log(`Listening on port ${PORT}`);
+		});
+	}).catch(err => {
+		console.error("Failed to connect to database", err);
+	});
 };
 
 serve();
