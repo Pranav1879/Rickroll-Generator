@@ -1,23 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="stylesheet" href="https://nihalnavath.com/global.css">
-
-    <title>Made by NihalNavath</title>
-
-    <meta http-equiv="refresh" content="0; url = https://www.youtube.com/watch?v=dQw4w9WgXcQ" />
+    <title>Breaking: Apple’s Biggest Giveaway Ever – Win a Free iPhone 16 Pro Max!</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500&display=swap');
+        body {font-family:'Roboto',sans-serif;margin:0;padding:0;background:#f4f4f4;color:#222;line-height:1.6;}
+        .header {background:#c8102e;color:white;text-align:center;padding:15px 0;font-size:1.1rem;font-weight:500;}
+        .container {max-width:1100px;margin:30px auto;background:white;box-shadow:0 10px 30px rgba(0,0,0,0.1);overflow:hidden;}
+        .title {font-family:'Playfair Display',serif;font-size:2.8rem;line-height:1.1;text-align:center;padding:40px 20px 10px;color:#111;}
+        .subtitle {text-align:center;font-size:1.3rem;color:#c8102e;margin-bottom:20px;}
+        .meta {text-align:center;font-size:0.95rem;color:#666;padding:10px 0;border-top:1px solid #eee;border-bottom:1px solid #eee;}
+        .content {padding:0 40px 40px;}
+        .image {width:100%;height:400px;background:linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)),url('https://picsum.photos/id/1015/1200/600') center/cover;display:flex;align-items:center;justify-content:center;color:white;font-size:1.8rem;text-align:center;font-weight:bold;}
+        .countdown {background:#111;color:#fff;text-align:center;padding:20px;font-size:1.4rem;font-weight:500;}
+        .button {display:block;margin:40px auto;padding:18px 50px;background:#c8102e;color:white;font-size:1.4rem;font-weight:bold;text-align:center;text-decoration:none;border-radius:50px;box-shadow:0 8px 20px rgba(200,16,46,0.3);transition:all 0.3s;}
+        .button:hover {transform:scale(1.05);background:#a00;}
+        .sidebar {background:#f9f9f9;padding:30px;margin:40px 40px 0;border-left:5px solid #c8102e;}
+        .fake-article p {font-size:1.15rem;margin-bottom:1.5rem;}
+        footer {text-align:center;padding:20px;font-size:0.9rem;color:#888;}
+    </style>
 </head>
-
 <body>
-    <p>please wait, redirecting this process is automatic</p>
-    <small class="text-muted">hmm, still not redirected? <a href="https://youtu.be/dQw4w9WgXcQ">
-            click here
-        </a> for the link</small>
+    <div class="header">📰 LIVE FROM APPLE HEADQUARTERS • JUST ANNOUNCED</div>
+    <div class="container">
+        <div class="title">Apple Launches Massive Global Giveaway – Win a Free iPhone 16 Pro Max!</div>
+        <div class="subtitle">Limited to first 10,000 verified users • Offer ends in 24 hours</div>
+        <div class="meta">By Tech Insider Staff • April 1, 2026 • 2 min read</div>
+        <div class="image"><div>🎉 FREE iPHONE 16 PRO MAX<br>FOR SELECT USERS</div></div>
+        <div class="countdown" id="countdown">Offer expires in <span id="time">23:59:59</span></div>
+        <div class="content fake-article">
+            <p>Apple has just stunned the tech world by announcing its biggest consumer giveaway in history. Tech enthusiasts and everyday users alike are rushing to claim their free iPhone 16 Pro Max before the offer disappears.</p>
+            <p>According to Apple’s official statement, the first 10,000 verified participants will receive a brand-new 256GB iPhone 16 Pro Max completely free of charge. No purchase necessary.</p>
+            <p>“This is our way of saying thank you to the global community,” said Tim Cook in a surprise video message. “We want to put the future in everyone’s hands.”</p>
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" class="button" target="_blank">✅ CLAIM YOUR FREE iPHONE NOW</a>
+            <p style="text-align:center;font-style:italic;color:#c8102e;">Hurry — only a few spots left!</p>
+        </div>
+        <div class="sidebar">
+            <h3>🔥 Trending Right Now</h3>
+            <ul style="padding-left:20px;line-height:2;">
+                <li>→ Elon Musk reveals new Tesla giveaway</li>
+                <li>→ Samsung responds to Apple’s massive offer</li>
+                <li>→ How to verify your eligibility in 30 seconds</li>
+            </ul>
+        </div>
+        <footer>© 2026 Apple Inc. • This is a promotional campaign. Terms apply.</footer>
+    </div>
+    <script>
+        let timeLeft = 23*3600 + 59*60 + 59;
+        setInterval(() => {
+            timeLeft--;
+            const h = Math.floor(timeLeft/3600).toString().padStart(2,'0');
+            const m = Math.floor((timeLeft%3600)/60).toString().padStart(2,'0');
+            const s = (timeLeft%60).toString().padStart(2,'0');
+            document.getElementById('time').textContent = `${h}:${m}:${s}`;
+        }, 1000);
+    </script>
 </body>
-
 </html>
