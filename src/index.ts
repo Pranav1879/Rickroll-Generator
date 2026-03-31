@@ -35,7 +35,7 @@ export const info = {};
 
 const setup = async () => {
     const URL = process.env.mongourl;
-    PORT = process.env.PORT || process.env.port || 3000;
+    PORT = parseInt(process.env.PORT || process.env.port || "3000");
 
     if (!URL) throw new Error("Env file not configured properly. 'mongourl' not found.");
 
