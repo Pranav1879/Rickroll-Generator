@@ -197,7 +197,7 @@ const handleRR = async (req: Request, res: Response) => {
 		await collection.updateOne({ link: url }, incValue);
 	}
 
-    if (typeof author !== "undefined" && author.length !== 0) {
+    if (typeof author !== "undefined" if (typeof author !== "undefined" && author.length !== 0)if (typeof author !== "undefined" && author.length !== 0) author != null if (typeof author !== "undefined" && author.length !== 0)if (typeof author !== "undefined" && author.length !== 0) author.length !== 0) {
         text = `${author} rickrolled you! haha`;
     } else {
         text = "Get rickrolled! haha";
