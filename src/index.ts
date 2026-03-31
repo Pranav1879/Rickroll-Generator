@@ -86,7 +86,7 @@ app.use(rateLimiterMiddleware);
 
 
 app.get("/", async (req: Request, res: Response) => {
-    const result = await collection.findOne({ _id: "TotalRRCount" }); //cache count maybe?
+    const result = await collection.findOne({ _id: new mongoDB.ObjectId("TotalRRCount") }); //cache count maybe?
 
     if (!result) {
         throw new Error("Could not find total rickroll count, is the database not configured? run `npm run setup-db`");
@@ -193,7 +193,7 @@ const handleRR = async (req: Request, res: Response) => {
 
     //increment count if not a bot
 	if (!isbot(req.headers["user-agent"])) {
-		await collection.updateOne({ _id: "TotalRRCount" }, incValue);
+		await collection.updateOne({ _id: new mongoDB.ObjectId("TotalRRCount") }, incValue);
 		await collection.updateOne({ link: url }, incValue);
 	}
 

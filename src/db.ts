@@ -42,20 +42,20 @@ const flagHandler = async () => {
 // Main //
 
 const get_count = async () => {
-    const count = await collection.findOne({ _id: "TotalRRCount" });
+    const count = await collection.findOne({ _id: new mongoDB.ObjectId("TotalRRCount") });
     console.log(`Total rickroll count: ${count.value}`);
 };
 
 const reset_count = async () => {
     await collection.updateOne(
-        { _id: "TotalRRCount" },
+        { _id: new mongoDB.ObjectId("TotalRRCount") },
         { $set: { count: 0 } },
     );
     console.log("Successfully reset total rickroll count to 0");
 };
 
 const check = async () => {
-    const globalRRCount = await collection.findOne({ _id: "TotalRRCount" });
+    const globalRRCount = await collection.findOne({ _id: new mongoDB.ObjectId("TotalRRCount") });
 
     if (!globalRRCount) {
         await collection.insertOne({ _id: new mongoDB.ObjectId("TotalRRCount"), value: 0 });
