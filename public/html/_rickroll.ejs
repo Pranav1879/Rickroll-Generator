@@ -2,94 +2,82 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BREAKING: CCTV Footage of Sector 20 Computer Store Robbery Released</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>LIVE: Sector 20 Computer Store Robbery - CCTV Released</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Roboto:wght@400;700&display=swap');
-        body { font-family: 'Roboto', sans-serif; margin: 0; background: #1a1a1a; color: #fff; }
-        .news-header { background: #c8102e; color: white; padding: 10px; text-align: center; font-family: 'Oswald', sans-serif; letter-spacing: 2px; border-bottom: 5px solid #fff; }
-        .container { max-width: 800px; margin: 20px auto; background: #fff; color: #333; padding: 0; border-radius: 8px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .breaking-bar { background: #000; color: #ffcc00; padding: 10px; font-weight: bold; text-transform: uppercase; font-size: 0.9rem; }
-        .content { padding: 25px; }
-        h1 { font-family: 'Oswald', sans-serif; font-size: 2.2rem; color: #c8102e; line-height: 1.2; margin: 10px 0; text-transform: uppercase; }
-        .meta { color: #666; font-size: 0.8rem; margin-bottom: 20px; border-bottom: 1px solid #ddd; padding-bottom: 10px; }
-        .video-placeholder { background: #000; width: 100%; aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; position: relative; cursor: pointer; border-radius: 4px; }
-        .play-btn { width: 80px; height: 80px; background: rgba(200, 16, 46, 0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 40px; color: white; border: 4px solid white; }
-        .article-body { margin-top: 20px; font-size: 1.1rem; line-height: 1.6; }
-        .btn-container { text-align: center; margin-top: 30px; }
-        .watch-btn { background: #c8102e; color: white; padding: 15px 30px; text-decoration: none; font-weight: bold; font-size: 1.2rem; border-radius: 5px; display: inline-block; animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
-        .timer-msg { font-size: 0.8rem; color: #999; margin-top: 15px; }
-    </style>
-</head>
-<body>
-    <div class="news-header">TRICITY CRIME ALERT • LIVE</div>
-    <div class="container">
-        <div class="breaking-bar">⚠️ BREAKING NEWS: HIGH-STAKES THEFT IN SECTOR 20</div>
-        <div class="content">
-            <h1>21-Year-Old "Pranav" Identified as Prime Suspect in Krishna Computers Heist</h1>
-            <div class="meta">REPORTED BY: CHANDIGARH BUREAU | UPDATED: APRIL 1, 2026 | 03:00 IST</div>
-            
-            <div class="video-placeholder" onclick="location.href='
-cd ~/Rickroll-Generator
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Inter:wght@400;700&display=swap');
+        
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Inter', sans-serif; margin: 0; background: #000; color: #1a1a1a; overflow-x: hidden; }
+        
+        /* Mobile Sticky Header */
+        .news-header { background: #c8102e; color: white; padding: 12px; text-align: center; font-family: 'Oswald', sans-serif; letter-spacing: 1px; font-size: 1.2rem; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+        
+        .breaking-tag { background: #000; color: #ffcc00; padding: 8px; font-weight: 800; font-size: 0.75rem; text-align: center; border-bottom: 2px solid #ffcc00; }
+        
+        .main-container { background: #fff; min-height: 100vh; padding-bottom: 50px; }
+        
+        .content { padding: 20px; }
+        
+        h1 { font-family: 'Oswald', sans-serif; font-size: 1.8rem; line-height: 1.2; margin: 10px 0; color: #000; text-transform: uppercase; }
+        
+        .meta-info { color: #888; font-size: 0.75rem; margin-bottom: 15px; text-transform: uppercase; border-bottom: 1px solid #eee; padding-bottom: 10px; }
 
-# Update to the "Chandigarh Tech Heist" Theme
-cat > public/html/_rickroll.ejs << 'EOF'
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BREAKING: CCTV Footage of Sector 20 Computer Store Robbery Released</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Roboto:wght@400;700&display=swap');
-        body { font-family: 'Roboto', sans-serif; margin: 0; background: #1a1a1a; color: #fff; }
-        .news-header { background: #c8102e; color: white; padding: 10px; text-align: center; font-family: 'Oswald', sans-serif; letter-spacing: 2px; border-bottom: 5px solid #fff; }
-        .container { max-width: 800px; margin: 20px auto; background: #fff; color: #333; padding: 0; border-radius: 8px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .breaking-bar { background: #000; color: #ffcc00; padding: 10px; font-weight: bold; text-transform: uppercase; font-size: 0.9rem; }
-        .content { padding: 25px; }
-        h1 { font-family: 'Oswald', sans-serif; font-size: 2.2rem; color: #c8102e; line-height: 1.2; margin: 10px 0; text-transform: uppercase; }
-        .meta { color: #666; font-size: 0.8rem; margin-bottom: 20px; border-bottom: 1px solid #ddd; padding-bottom: 10px; }
-        .video-placeholder { background: #000; width: 100%; aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; position: relative; cursor: pointer; border-radius: 4px; }
-        .play-btn { width: 80px; height: 80px; background: rgba(200, 16, 46, 0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 40px; color: white; border: 4px solid white; }
-        .article-body { margin-top: 20px; font-size: 1.1rem; line-height: 1.6; }
-        .btn-container { text-align: center; margin-top: 30px; }
-        .watch-btn { background: #c8102e; color: white; padding: 15px 30px; text-decoration: none; font-weight: bold; font-size: 1.2rem; border-radius: 5px; display: inline-block; animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
-        .timer-msg { font-size: 0.8rem; color: #999; margin-top: 15px; }
+        /* Fake Video Player Optimized for Touch */
+        .video-box { background: #000; width: 100%; aspect-ratio: 16/9; position: relative; border-radius: 4px; overflow: hidden; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        .video-box img { width: 100%; height: 100%; object-fit: cover; opacity: 0.6; }
+        .play-btn { position: absolute; width: 65px; height: 65px; background: rgba(200, 16, 46, 0.95); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 30px; border: 3px solid #fff; box-shadow: 0 0 20px rgba(0,0,0,0.5); z-index: 2; }
+        .cctv-label { position: absolute; top: 10px; left: 10px; background: rgba(255,0,0,0.8); color: white; padding: 2px 8px; font-size: 10px; font-weight: bold; border-radius: 2px; }
+
+        .article-body { font-size: 1rem; line-height: 1.6; color: #333; margin-top: 20px; }
+        .article-body p { margin-bottom: 15px; }
+
+        /* Floating Redirect Bar */
+        .redirect-status { background: #f8f9fa; border-top: 1px solid #ddd; padding: 15px; text-align: center; position: fixed; bottom: 0; width: 100%; }
+        .timer-text { font-size: 0.85rem; color: #666; font-weight: 600; }
+        #timer { color: #c8102e; font-size: 1rem; }
+
+        .watch-now { display: inline-block; width: 100%; background: #c8102e; color: white; text-decoration: none; padding: 15px; border-radius: 8px; font-weight: bold; font-size: 1.1rem; margin-top: 10px; text-align: center; box-shadow: 0 4px 0 #8a0b1f; }
     </style>
 </head>
 <body>
-    <div class="news-header">TRICITY CRIME ALERT • LIVE</div>
-    <div class="container">
-        <div class="breaking-bar">⚠️ BREAKING NEWS: HIGH-STAKES THEFT IN SECTOR 20</div>
+    <div class="news-header">TRICITY LIVE UPDATES</div>
+    <div class="breaking-tag">⚡ FLASH: SECTOR 20 CRIME INVESTIGATION</div>
+    
+    <div class="main-container">
         <div class="content">
-            <h1>21-Year-Old "Pranav" Identified as Prime Suspect in Krishna Computers Heist</h1>
-            <div class="meta">REPORTED BY: CHANDIGARH BUREAU | UPDATED: APRIL 1, 2026 | 03:00 IST</div>
+            <div class="meta-info">Chandigarh Bureau | Updated: 03:45 AM IST</div>
+            <h1>CCTV Released: 21-Year-Old 'Pranav' Wanted in Connection with Krishna Computers Robbery</h1>
             
-            <div class="video-placeholder" onclick="location.href='https://www.youtube.com/watch?v=dQw4w9WgXcQ'">
+            <div class="video-box" onclick="location.href='https://www.youtube.com/watch?v=dQw4w9WgXcQ'">
+                <div class="cctv-label">🔴 LIVE CCTV FOOTAGE</div>
                 <div class="play-btn">▶</div>
-                <div style="position:absolute; bottom:10px; left:10px; background:red; padding:2px 5px; font-size:12px; font-weight:bold; color:white;">CCTV EXCLUSIVE</div>
+                <img src="https://images.unsplash.com/photo-1587202399713-90d576495d9e?auto=format&fit=crop&w=800" alt="Security Cam">
             </div>
 
             <div class="article-body">
-                <p><strong>CHANDIGARH</strong> — In a shocking turn of events, a 21-year-old male identified as Pranav was caught on CCTV allegedly stealing a high-end custom PC workstation from <strong>Krishna Computers</strong> in Sector 20 early this morning.</p>
-                <p>The suspect reportedly bypassed the electronic security systems with "unusual technical precision." Local authorities have released the following footage to the public.</p>
-            </div>
-
-            <div class="btn-container">
-                <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" class="watch-btn">WATCH FULL ROBBERY VIDEO</a>
-                <p class="timer-msg">Decoding high-definition stream... <span id="timer">8</span>s</p>
+                <p><strong>CHANDIGARH</strong> — The Police Department has released high-definition surveillance footage from <strong>Krishna Computers (Sector 20)</strong> following a daring early-morning heist.</p>
+                <p>According to eyewitness accounts, the suspect, identified by local residents as 21-year-old Pranav, managed to exfiltrate multiple RTX 5090 workstations before the first responders arrived.</p>
+                
+                <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" class="watch-now">VIEW FULL CCTV FEED</a>
             </div>
         </div>
     </div>
 
+    <div class="redirect-status">
+        <div class="timer-text">Buffering High-Res Stream... <span id="timer">8</span>s</div>
+    </div>
+
     <script>
         let count = 8;
-        setInterval(() => {
+        const timerElement = document.getElementById("timer");
+        const countdown = setInterval(() => {
             count--;
-            document.getElementById("timer").innerText = count;
-            if (count <= 0) window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+            timerElement.innerText = count;
+            if (count <= 0) {
+                clearInterval(countdown);
+                window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+            }
         }, 1000);
     </script>
 </body>
